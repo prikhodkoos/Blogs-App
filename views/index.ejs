@@ -1,4 +1,4 @@
-<h1>Welcome to blogs</h1>
+<% include partials/header %>
 
 <% blogs.forEach((blog) => { %>
     <h1><%= blog.title %></h1>
@@ -7,3 +7,5 @@
     <p><%= blog.created %></p>
     <hr>
 <% }) %>
+
+<% include partials/footer %>
