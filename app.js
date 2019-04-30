@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const blogSchema = new mongoose.Schema({
     title: String,
-    img: {type: String, default: "https://blagoustriy.kiev.ua/templates/kyivblago/images/default_image.jpg"},
+    img: String, 
     body: String,
     created: {type: Date, default: Date.now},
 });
@@ -26,6 +26,37 @@ app.get("/blogs", (req, res) => {
             console.log(error);
         }
     }); 
+});
+
+// new route
+app.get("/blogs/new", (req, res) => {
+    res.render("new");
+});
+
+// create route
+app.post("/blogs", (req, res) => {
+    Blog.create(req.body.blog, 
+    (error, item) => {
+        if (!error) {
+            console.log(item + " WAS SAVED"); 
+            res.redirect("/blogs");
+        }
+        else {
+            console.log(error);
+        }
+    });
+});
+
+// show route
+app.get("/blogs/:id", (req, res) => {
+    Blog.findById(req.params.id, (error, readBlog) => {
+        if (!error) {
+            res.render("show", {readBlog});
+        }
+        else {
+            console.log(error);
+        }
+    });
 });
 
 app.listen(3000, () => {
